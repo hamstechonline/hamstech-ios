@@ -1056,17 +1056,17 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     
     
 
-    @objc func startTimer(timersset : Timer)
-    {
-        //UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut, animations:
-        //{
-            self.testimonialsCollectionView.scrollToItem(at: IndexPath(row: timersset.userInfo! as! Int,section:0), at: .centeredHorizontally, animated: false)
-       // }, completion: nil)
-
-
-
-
-    }
+//    @objc func startTimer(timersset : Timer)
+//    {
+//        //UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut, animations:
+//        //{
+//            self.testimonialsCollectionView.scrollToItem(at: IndexPath(row: timersset.userInfo! as! Int,section:0), at: .centeredHorizontally, animated: false)
+//       // }, completion: nil)
+//
+//
+//
+//
+//    }
     
     
     

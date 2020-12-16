@@ -26,7 +26,8 @@ class OnbordingViewController: UIViewController {
         ActivityServiceCalling(Pagename: "Onbording", Activity: "Viewed")
         
         skip_But.layer.cornerRadius = 15
-        // loggedin or not
+        
+        // logged in or not
         let Logedincheck: String = UserDefaults.standard.object(forKey: "logedin") as? String ?? ""
 
         if Logedincheck == "Userlogedin" {
