@@ -38,11 +38,13 @@ class ContactUsViewController: UIViewController, GMSMapViewDelegate,CLLocationMa
     @IBOutlet weak var back_Bu: UIButton!
     
        var marker1 = GMSMarker()
+      var markers = [GMSMarker]()
        var locationManager = CLLocationManager()
        var lat = Double()
        var lon  = Double()
        var fromsidemenu = Bool()
     
+    var dataArray = [Data1]()
     
        let data1 = Data1(location: CLLocation(latitude: 17.409634, longitude: 78.485407), area: "Himayatnagar", address1: "II, III & IV Floor, R.K. Plaza", address2: "HIMAYATNAGAR MAIN ROAD", city: "Hyderabad – 82 India", Phone: "PHONE: +91-7416066555", Email: "EMAIL: info@hamstech.com")
 
@@ -67,6 +69,8 @@ class ContactUsViewController: UIViewController, GMSMapViewDelegate,CLLocationMa
         override func viewDidLoad() {
             super.viewDidLoad()
 
+            locations()
+            
             ActivityServiceCalling(Pagename: "Contactus", Activity: "Viewed")
             
             if fromsidemenu == true {
@@ -167,21 +171,96 @@ class ContactUsViewController: UIViewController, GMSMapViewDelegate,CLLocationMa
             
         }
     
+    
+    func locations(){
+        
+        let data1 = Data1(location: CLLocation(latitude: 17.409634, longitude: 78.485407), area: "Himayatnagar", address1: "II, III & IV Floor, R.K. Plaza,", address2: "HIMAYATNAGAR MAIN ROAD", city: "Hyderabad – 82 India.", Phone: "PHONE: +91-7416066555", Email: "EMAIL: info@hamstech.com")
+
+        let data2 = Data1(location: CLLocation(latitude: 17.436826, longitude: 78.453033), area: "Punjagutta", address1: "3RD FLOOR, OM TOWERS, OPPOSITE MCDONALD’S,", address2: "Punjagutta ‘X’ Road, Punjagutta,", city: "HYDERABAD-29 India.", Phone: "PHONE: +91-40-66684994, +91-40-66684995", Email: "EMAIL: info@hamstech.com")
+
+        let data3 = Data1(location: CLLocation(latitude: 17.438766, longitude: 78.409774), area: "Jubilee Hills", address1: "Plot No 472, 2nd Floor, SAI Galleria,", address2: "Above Nissan Showroom, Road No 36,", city: "Hyderabad – 500033 India.", Phone: "PHONE:+91-7207057291", Email: "EMAIL: info@hamstech.com")
+
+        
+        let data4 = Data1(location: CLLocation(latitude: 17.450836, longitude: 78.489081), area: "Secunderabad", address1: "II Floor, Jade Arcade,", address2: "Paradise ‘X’ Road, M.G. Road,", city: "Secunderabad – 03 India.", Phone: "PHONE:+91-40-66484997, +91-40-66484998", Email: "EMAIL: info@hamstech.com")
+
+        
+        let data5 = Data1(location: CLLocation(latitude: 17.490768, longitude: 78.389206), area: "Kukatpally", address1: "3rd and 4th floor, above Neerus,", address2: "Forum Mall circle JNTU road,", city: "Kukatpally Hyderabad – 72 India.", Phone: "PHONE:+91-04023155963", Email: "EMAIL: info@hamstech.com")
+
+        
+        let data6 = Data1(location: CLLocation(latitude: 17.442345, longitude: 78.369605), area: "Gachibowli", address1: "4th Floor, Vamsiram builders,", address2: "Jyothi Imperial, Above South India Mall,", city: "Hyderabad – 32 India", Phone: "PHONE:+91-7207599222", Email: "EMAIL: info@hamstech.com")
+        
+        let data7 = Data1(location: CLLocation(latitude: 17.370879, longitude: 78.543669), area: "Kothapet", address1: "4th Floor, Above More Mega Store,", address2: "Beside Astalakshmi Temple Arch,", city: "/Hyderabad – 35 India.", Phone: "PHONE:+91 40  2403 4994", Email: "EMAIL: info@hamstech.com")
+        
+        
+        let data = [data1,data7,data3,data4,data5,data6,data2]
+        
+         for i in data {
+            
+          self.dataArray.append(i)
+          
+          self.branches()
+            
+        }
+
+        
+    }
+    
+    
+    func branches(){
+  
+        let marker = GMSMarker()
+        
+        for i in dataArray {
+          
+          let location = i.location
+          
+          let lat: CLLocationDegrees =  location.coordinate.latitude
+          let lon: CLLocationDegrees = location.coordinate.longitude
+            
+            marker.position = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+          
+            marker.map = contactus_Map
+            contactus_Map.isMyLocationEnabled = true
+    
+            contactus_Map.delegate = self
+          
+
+           // campous_Map.settings.scrollGestures = false
+            contactus_Map.camera = GMSCameraPosition.camera(withTarget: marker.position, zoom: 11)
+          
+          //  campous_Map.setMinZoom(11, maxZoom: 11)
+            marker.title = i.area
+          //  marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.2)
+          //  marker.accessibilityLabel = "\(i.area)"
+           // campous_Map.selectedMarker = markers
+          
+      
+        }
+
+        
+        self.locationManager.delegate = self
+        self.locationManager.startUpdatingLocation()
+        markers.append(marker)
+      
+      
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
              self.navigationController?.navigationBar.isHidden = true
          }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         
-           if(mapView.camera.zoom <= 11) {
-         
-            contactus_Map.settings.scrollGestures = false
-           
-            
-        } else {
-            
-            contactus_Map.settings.scrollGestures = true
-        }
+//           if(mapView.camera.zoom <= 11) {
+//         
+//            contactus_Map.settings.scrollGestures = false
+//           
+//            
+//        } else {
+//            
+//            contactus_Map.settings.scrollGestures = true
+//        }
     }
     
     

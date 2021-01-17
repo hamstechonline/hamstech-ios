@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MentorScreenCollectionViewCell: UICollectionViewCell {
+class MentorScreentableviewcell: UITableViewCell {
     
     @IBOutlet weak var cornerRadiusView: UIView!
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var image_View: UIImageView!
     @IBOutlet weak var description_Lbl: UILabel!
     @IBOutlet weak var viewmore_But: UIButton!
     @IBOutlet weak var title_Lbl: UILabel!

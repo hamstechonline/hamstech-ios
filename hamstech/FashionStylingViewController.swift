@@ -29,7 +29,7 @@ class FashionStylingViewController: UIViewController,SearchSendingDelegate {
     @IBOutlet weak var chatWithUsView: UIView!
     
     @IBOutlet weak var subcat_Lbl: UILabel!
-    @IBOutlet weak var overview_Txt: UILabel!
+    @IBOutlet weak var overview_Txt: UITextView!
     @IBOutlet weak var duration_Lbl: UILabel!
     @IBOutlet weak var elgibility_Lbl: UILabel!
    // @IBOutlet weak var curriculum: UILabel!
@@ -38,12 +38,13 @@ class FashionStylingViewController: UIViewController,SearchSendingDelegate {
     @IBOutlet weak var courseCurriculumTable: UITableView!
     
     @IBOutlet weak var height: NSLayoutConstraint!
+    @IBOutlet weak var overview_Height: NSLayoutConstraint!
     
     
     var catname = String()
     var catid = String()
     var courceid = String()
-    
+    var overviewbool = Bool()
    
     var courseCurriculumData = [FashionStylingResponseModel]()
 
@@ -167,20 +168,34 @@ class FashionStylingViewController: UIViewController,SearchSendingDelegate {
     
     @IBAction func viewmore_Action(_ sender: Any) {
           
-          ActivityServiceCalling(Pagename: "Mentores", Activity: "Viewmore")
+        
+        if overviewbool == true {
+            
+            overviewbool = false
+            overview_Height.constant = 85
+            
+        } else {
           
-          let story = UIStoryboard.init(name: "Main", bundle: nil)
-          let cartVC = story.instantiateViewController(withIdentifier: "OverviewPopupViewController") as! OverviewPopupViewController
-            cartVC.overviewtxt = overview_Txt.text!
-         
-          var viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-          let navigation = UINavigationController.init(rootViewController: cartVC)
-          navigation.modalPresentationStyle = .overCurrentContext
-          while ((viewcontroller?.presentedViewController) != nil){
-          viewcontroller = viewcontroller?.presentedViewController
-          }
-          viewcontroller?.present(navigation, animated: false, completion: nil)
-          
+            overviewbool = true
+            overview_Height.constant = self.overview_Txt.contentSize.height + 85
+            
+        }
+        
+        
+//          ActivityServiceCalling(Pagename: "Mentores", Activity: "Viewmore")
+//
+//          let story = UIStoryboard.init(name: "Main", bundle: nil)
+//          let cartVC = story.instantiateViewController(withIdentifier: "OverviewPopupViewController") as! OverviewPopupViewController
+//            cartVC.overviewtxt = overview_Txt.text!
+//
+//          var viewcontroller = UIApplication.shared.keyWindow?.rootViewController
+//          let navigation = UINavigationController.init(rootViewController: cartVC)
+//          navigation.modalPresentationStyle = .overCurrentContext
+//          while ((viewcontroller?.presentedViewController) != nil){
+//          viewcontroller = viewcontroller?.presentedViewController
+//          }
+//          viewcontroller?.present(navigation, animated: false, completion: nil)
+//
           
     
           

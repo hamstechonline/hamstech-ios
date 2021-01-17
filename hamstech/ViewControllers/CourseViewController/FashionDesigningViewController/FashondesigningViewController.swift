@@ -36,6 +36,7 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
     var h = ["h1","h2","h3","h4","h5"]
 
     var timer2:Timer!
+    var overviewbool = Bool()
     
     static var currentPage: Int = 0
 
@@ -239,13 +240,13 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
 
     if status == "ok"{
 
-    if let course_video = response["course_video"] as? [[String: Any]] {
+    if let course_video = response["course_video"] as? String {
             
           // Video
             
-            if course_video.count != 0 {
-            
-            let video_url = course_video[0]["video_url"] as! String
+//            if course_video.count != 0 {
+//
+//            let video_url = course_video[0]["video_url"] as! String
             
               
           let playerVars: [String: Any] = [
@@ -256,11 +257,24 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
           "origin": "https://youtube.com"
           ]
           self.videoPlayer.delegate = self
-          self.videoPlayer.loadWithVideoId(video_url, with: playerVars)
+          self.videoPlayer.loadWithVideoId(course_video, with: playerVars)
      
-        }
+        //}
         
-        }
+    }
+//    else {
+//        // If video is not their
+//
+//        let playerVars: [String: Any] = [
+//        "controls": 1,
+//        "modestbranding": 1,
+//        "playsinline": 1,
+//        "autoplay": 1,
+//        "origin": "https://youtube.com"
+//        ]
+//        self.videoPlayer.delegate = self
+//        self.videoPlayer.loadWithVideoId("VJMtR5t5rfg", with: playerVars)
+//    }
         
     self.courseCareerOptionData.removeAll()
     self.courseCareerOptionData.removeAll()
@@ -345,21 +359,34 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
     }
 
     @IBAction func viewmore_Action(_ sender: Any) {
-          
-   
-          let story = UIStoryboard.init(name: "Main", bundle: nil)
-          let cartVC = story.instantiateViewController(withIdentifier: "CarreroptionspopupViewController") as! CarreroptionspopupViewController
-        cartVC.courseCareerOptionData = self.courseCareerOptionData
          
-          var viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-          let navigation = UINavigationController.init(rootViewController: cartVC)
-          navigation.modalPresentationStyle = .overCurrentContext
-          while ((viewcontroller?.presentedViewController) != nil){
-          viewcontroller = viewcontroller?.presentedViewController
-          }
-          viewcontroller?.present(navigation, animated: false, completion: nil)
+        
+        if overviewbool == true {
+            
+            overviewbool = false
+            self.carrer_Height.constant = 270
+            
+        } else {
           
-          
+            overviewbool = true
+            self.carrer_Height.constant =  CGFloat(self.courseCareerOptionData.count*45) + 100
+            
+        }
+        
+   
+//          let story = UIStoryboard.init(name: "Main", bundle: nil)
+//          let cartVC = story.instantiateViewController(withIdentifier: "CarreroptionspopupViewController") as! CarreroptionspopupViewController
+//        cartVC.courseCareerOptionData = self.courseCareerOptionData
+//
+//          var viewcontroller = UIApplication.shared.keyWindow?.rootViewController
+//          let navigation = UINavigationController.init(rootViewController: cartVC)
+//          navigation.modalPresentationStyle = .overCurrentContext
+//          while ((viewcontroller?.presentedViewController) != nil){
+//          viewcontroller = viewcontroller?.presentedViewController
+//          }
+//          viewcontroller?.present(navigation, animated: false, completion: nil)
+//
+//
     
           
       }
@@ -376,6 +403,8 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
         
 
            cell.coucesLbl.text = courseListData[indexPath.row].courseName
+            
+           cell.selectionStyle = .none
 
            return cell
           }
@@ -458,6 +487,11 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
             cell.fashonLbl.text = courseCareerOptionData[3].careerOptions
             
         }
+        else {
+            cell.fashonLbl.text = courseCareerOptionData[indexPath.row].careerOptions ?? ""
+        }
+       
+        
         
     
 
@@ -505,9 +539,6 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
 
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath as IndexPath) as! TestimonialsCell
 
-
-
-
     cell.TestimonialsShadowView.layer.cornerRadius = 10
     cell.TestimonialsShadowView.layer.borderWidth = 1.0
     cell.TestimonialsShadowView.layer.borderColor = UIColor.clear.cgColor
@@ -522,9 +553,6 @@ class FashondesigningViewController: UIViewController, YoutubePlayerViewDelegate
     cell.courseTestimonialDescription.lineBreakMode = .byClipping
     cell.courseTestimonialPosition.lineBreakMode = .byClipping
         
-        
-        
-
     return cell
     }
     }

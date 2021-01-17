@@ -34,6 +34,7 @@ class LifeAtHamstechViewController: UIViewController, YoutubePlayerViewDelegate,
     @IBOutlet weak var campous_Map: GMSMapView!
     @IBOutlet weak var events_Height: NSLayoutConstraint!
     
+    @IBOutlet weak var more_But: UIButton!
     var markers = [GMSMarker]()
     var locationManager = CLLocationManager()
 
@@ -286,7 +287,24 @@ class LifeAtHamstechViewController: UIViewController, YoutubePlayerViewDelegate,
             
           self.eventsCollectionView.reloadData()
             
-            self.events_Height.constant = CGFloat(self.lifeAtHamstechEventsData.count/2) * 190 + 65
+       // self.events_Height.constant = CGFloat(self.lifeAtHamstechEventsData.count/2) * 190 + 65
+            
+            
+            print("self.lifeAtHamstechEventsData.count", self.lifeAtHamstechEventsData.count)
+            
+            self.events_Height.constant = 495
+         
+            if self.lifeAtHamstechEventsData.count > 4 {
+                
+                self.more_But.isHidden = false
+                
+            } else {
+               
+                self.more_But.isHidden = true
+            }
+            
+            
+            
           }
         }else {
               
@@ -306,6 +324,11 @@ class LifeAtHamstechViewController: UIViewController, YoutubePlayerViewDelegate,
       }
       
       
+    @IBAction func moreevent_Action(_ sender: Any) {
+        
+        self.events_Height.constant = CGFloat(self.lifeAtHamstechEventsData.count/2) * 190 + 115
+        
+      }
     
     }
 
